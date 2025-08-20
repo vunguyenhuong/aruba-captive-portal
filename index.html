@@ -3,16 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <title>Guest WiFi Login</title>
+  <script>
+    function getQueryParam(name) {
+      return new URLSearchParams(window.location.search).get(name) || '';
+    }
+
+    function onLoad() {
+      document.getElementById('switchip').value = getQueryParam('switchip');
+      document.getElementById('mac').value = getQueryParam('mac');
+      document.getElementById('ip').value = getQueryParam('ip');
+      document.getElementById('essid').value = getQueryParam('essid');
+      document.getElementById('url').value = getQueryParam('url');
+      document.getElementById('form').action = 'http://' + getQueryParam('switchip') + '/cgi-bin/login';
+    }
+  </script>
 </head>
-<body style="display:flex;justify-content:center;align-items:center;height:100vh;background:#f3f4f6;">
+<body onload="onLoad()" style="display:flex;justify-content:center;align-items:center;height:100vh;background:#f3f4f6;">
   <div style="background:#fff;padding:2rem;border-radius:1rem;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center;max-width:400px;width:100%;">
     <h2>Guest WiFi</h2>
-    <form method="POST" action="http://$switchip/cgi-bin/login">
-      <input type="hidden" name="cmd" value="authenticate">
-      <input type="hidden" name="mac" value="$mac">
-      <input type="hidden" name="ip" value="$ip">
-      <input type="hidden" name="essid" value="$essid">
-      <input type="hidden" name="url" value="$url">
+    <form id="form" method="POST">
+      <input type="hidden" id="cmd" name="cmd" value="authenticate">
+      <input type="hidden" id="mac" name="mac">
+      <input type="hidden" id="ip" name="ip">
+      <input type="hidden" id="essid" name="essid">
+      <input type="hidden" id="url" name="url">
       <input type="hidden" name="user" value="guest">
       <input type="hidden" name="password" value="">
       <button type="submit" style="background:#2563eb;color:#fff;padding:1rem;width:100%;border:none;border-radius:0.5rem;font-size:1rem;cursor:pointer;">Kết nối Internet</button>
