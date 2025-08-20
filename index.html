@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Guest WiFi Survey</title>
+    <title>Khảo sát WiFi - Đã kết nối</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             display: flex;
@@ -11,21 +12,27 @@
             height: 100vh;
             background: #f3f4f6;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            text-align: center;
+            margin: 0;
         }
         .container {
             background: #fff;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             border-radius: 1rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
+            max-width: 450px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h2 {
             color: #1f2937;
+            margin-bottom: 1.5rem;
         }
         .input-group {
             margin-bottom: 1rem;
+            width: 100%;
         }
         .input-group input {
             width: 100%;
@@ -52,7 +59,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Khảo sát truy cập WiFi</h2>
+        <h2>Khảo sát để truy cập Internet</h2>
         <form method="POST" id="auth-form">
             <input type="hidden" name="cmd" value="authenticate">
             <input type="hidden" name="mac" id="mac-input">
@@ -70,14 +77,14 @@
                 <input type="number" name="age" placeholder="Tuổi" required>
             </div>
 
-            <button type="submit">Truy cập Internet</button>
+            <button type="submit">Sử dụng mạng này</button>
         </form>
     </div>
 
     <script>
+        // Hàm lấy các tham số từ URL
         function getQueryParams() {
             const params = {};
-            // Lấy các tham số từ URL
             window.location.search.substring(1).split('&').forEach(pair => {
                 const [key, value] = pair.split('=').map(decodeURIComponent);
                 params[key] = value;
@@ -88,7 +95,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const params = getQueryParams();
             const form = document.getElementById('auth-form');
-
+            
             // Cập nhật action của form với switchip nhận được từ URL
             if (params.switchip) {
                 form.action = `http://${params.switchip}/cgi-bin/login`;
@@ -107,16 +114,6 @@
             if (params.url) {
                 document.getElementById('url-input').value = params.url;
             }
-
-            // Lưu dữ liệu khảo sát (tùy chọn)
-            form.addEventListener('submit', (e) => {
-                const fullname = form.querySelector('input[name="fullname"]').value;
-                const age = form.querySelector('input[name="age"]').value;
-                
-                // Bạn có thể gửi dữ liệu này đến một API nào đó
-                // Ví dụ: console.log({ fullname, age, mac: params.mac });
-                // Để lưu trữ, bạn cần một backend server (Node.js, Python,...)
-            });
         });
     </script>
 </body>
