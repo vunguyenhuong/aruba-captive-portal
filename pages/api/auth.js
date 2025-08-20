@@ -1,12 +1,9 @@
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { username, password } = req.body;
-    const { switchip, mac, url } = req.query; // Aruba gửi khi redirect ban đầu
+    const { username, password, switchip, mac, url } = req.body;
 
-    // Demo: user/password cứng
     if (username === "guest" && password === "123456") {
       try {
-        // Gửi thông báo authenticated về Aruba
         if (switchip && mac) {
           await fetch(`http://${switchip}/cgi-bin/login`, {
             method: "POST",
@@ -19,7 +16,6 @@ export default async function handler(req, res) {
           });
         }
 
-        // Redirect client về URL gốc mà Aruba muốn (hoặc fallback Google)
         res.writeHead(302, {
           Location: url || "http://www.google.com",
         });
