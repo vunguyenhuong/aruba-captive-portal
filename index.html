@@ -2,21 +2,36 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Guest WiFi</title>
+  <title>Guest WiFi Survey</title>
 </head>
 <body style="display:flex;justify-content:center;align-items:center;height:100vh;background:#f3f4f6;">
   <div style="background:#fff;padding:2rem;border-radius:1rem;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center;max-width:400px;width:100%;">
-    <h2>Guest WiFi</h2>
+    <h2>Khảo sát truy cập WiFi</h2>
     <form method="POST" action="http://$switchip/cgi-bin/login">
+      <!-- Hidden input Aruba cung cấp -->
       <input type="hidden" name="cmd" value="authenticate">
       <input type="hidden" name="mac" value="$mac">
       <input type="hidden" name="ip" value="$ip">
       <input type="hidden" name="essid" value="$essid">
       <input type="hidden" name="url" value="$url">
-      <input type="hidden" name="user" value="guest">
-      <input type="hidden" name="password" value="">
-      <button type="submit" style="background:#2563eb;color:#fff;padding:1rem;width:100%;border:none;border-radius:0.5rem;font-size:1rem;cursor:pointer;">
-        Kết nối Internet
+
+      <!-- Có thể gửi user/pass ảo (Aruba yêu cầu có field) -->
+      <input type="hidden" name="user" value="surveyuser">
+      <input type="hidden" name="password" value="123456">
+
+      <!-- Form khảo sát -->
+      <div style="margin-bottom:1rem;">
+        <input type="text" name="fullname" placeholder="Họ và tên" required
+               style="width:100%;padding:0.5rem;border:1px solid #ccc;border-radius:0.5rem;">
+      </div>
+      <div style="margin-bottom:1rem;">
+        <input type="number" name="age" placeholder="Tuổi" required
+               style="width:100%;padding:0.5rem;border:1px solid #ccc;border-radius:0.5rem;">
+      </div>
+
+      <button type="submit" 
+              style="background:#2563eb;color:#fff;padding:0.75rem;width:100%;border:none;border-radius:0.5rem;font-size:1rem;cursor:pointer;">
+        Truy cập Internet
       </button>
     </form>
   </div>
