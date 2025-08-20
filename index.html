@@ -2,33 +2,23 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Guest WiFi Login</title>
-  <script>
-    function closePortal() {
-      // iOS captive portal
-      if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.captive) {
-        window.webkit.messageHandlers.captive.postMessage("success");
-      }
-      // Android captive portal
-      if (typeof Android !== "undefined" && Android.onCaptivePortalDismissed) {
-        Android.onCaptivePortalDismissed();
-      }
-      // Windows captive portal
-      if (navigator.userAgent.includes("Windows")) {
-        window.close();
-      }
-      // fallback: redirect ra ngoài
-      window.location.href = "http://www.google.com";
-    }
-  </script>
+  <title>Guest WiFi</title>
 </head>
 <body style="display:flex;justify-content:center;align-items:center;height:100vh;background:#f3f4f6;">
   <div style="background:#fff;padding:2rem;border-radius:1rem;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center;max-width:400px;width:100%;">
     <h2>Guest WiFi</h2>
-    <p>Bấm nút dưới đây để bắt đầu sử dụng Internet</p>
-    <button onclick="closePortal()" style="background:#2563eb;color:#fff;padding:1rem;width:100%;border:none;border-radius:0.5rem;font-size:1rem;cursor:pointer;">
-      Kết nối Internet
-    </button>
+    <form method="POST" action="http://$switchip/cgi-bin/login">
+      <input type="hidden" name="cmd" value="authenticate">
+      <input type="hidden" name="mac" value="$mac">
+      <input type="hidden" name="ip" value="$ip">
+      <input type="hidden" name="essid" value="$essid">
+      <input type="hidden" name="url" value="$url">
+      <input type="hidden" name="user" value="guest">
+      <input type="hidden" name="password" value="">
+      <button type="submit" style="background:#2563eb;color:#fff;padding:1rem;width:100%;border:none;border-radius:0.5rem;font-size:1rem;cursor:pointer;">
+        Kết nối Internet
+      </button>
+    </form>
   </div>
 </body>
 </html>
